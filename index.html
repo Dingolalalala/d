@@ -1,1 +1,40 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Vibe Friend</title>
+</head>
+<body>
+  <h1>Vibe Friend</h1>
+  <button id="subscribe">Allow Notifications</button>
+  <button id="vibe">Send Vibe</button>
+
+  <script>
+    const publicVapidKey = 'YOUR_PUBLIC_VAPID_KEY_HERE'; // for push
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').then(() => {
+        console.log('Service Worker registered');
+      });
+    }
+
+    // Request notification permission
+    document.getElementById('subscribe').addEventListener('click', async () => {
+      const permission = await Notification.requestPermission();
+      if(permission === 'granted'){
+        alert('Notifications enabled!');
+      } else {
+        alert('You need to allow notifications.');
+      }
+    });
+
+    // Send a push (this is just an example trigger)
+    document.getElementById('vibe').addEventListener('click', async () => {
+      // In a real setup, you would call your server here to send a push to the subscriber
+      alert('In real use, this would trigger your friend’s device!');
+    });
+  </script>
+</body>
+</html>
